@@ -1,15 +1,12 @@
 // backend/routes/adminRoutes.js
-const router = require('express').Router();
-const auth = require('../middlewares/authMiddleware');
-const admin = require('../middlewares/adminMiddleware');
-const { listOffers } = require('../controllers/offerController');
+const express = require("express");
+const router = express.Router();
 
-router.use(auth, admin);
+const authMiddleware = require("../middlewares/authMiddleware");
+const adminMiddleware = require("../middlewares/adminMiddleware");
 
-router.get('/dashboard', async (req, res) => {
-  // MVP : juste renvoyer le nombre d’offres
-  const offers = await listOffers({}); // simple réutilisation
-  res.json({ offersCount: offers.length });
-});
+const { listUsersCtrl } = require("../controllers/adminController");
+
+router.get("/users", authMiddleware, adminMiddleware, listUsersCtrl);
 
 module.exports = router;

@@ -1,9 +1,16 @@
 // backend/routes/requestRoutes.js
-const router = require('express').Router();
-const auth = require('../middlewares/authMiddleware');
-const { createRequestCtrl, getMyRequests } = require('../controllers/emailController');
+const express = require("express");
+const router = express.Router();
 
-router.post('/', createRequestCtrl);      // invité ou user
-router.get('/me', auth, getMyRequests);   // historique user
+const { createRequestCtrl, listRequestsCtrl } = require("../controllers/requestController");
+const authMiddleware = require("../middlewares/authMiddleware");
+const adminMiddleware = require("../middlewares/adminMiddleware");
+
+// Créer une demande (public ou user connecté selon ton choix)
+// Ici: public (le formulaire demande email etc.)
+router.post("/", createRequestCtrl);
+
+// Lister demandes: admin uniquement
+router.get("/", authMiddleware, adminMiddleware, listRequestsCtrl);
 
 module.exports = router;

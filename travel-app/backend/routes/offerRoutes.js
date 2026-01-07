@@ -1,21 +1,19 @@
-const router = require('express').Router();
-const auth = require('../middlewares/authMiddleware');
-const admin = require('../middlewares/adminMiddleware');
+// backend/routes/offerRoutes.js
+const express = require("express");
+const router = express.Router();
+
 const {
   listOffers,
   getOffer,
   createOfferCtrl,
   updateOfferCtrl,
   deleteOfferCtrl,
-} = require('../controllers/offerController');
+} = require("../controllers/offerController");
 
-// public
-router.get('/', listOffers);
-router.get('/:id', getOffer);
-
-// admin
-router.post('/', auth, admin, createOfferCtrl);
-router.put('/:id', auth, admin, updateOfferCtrl);
-router.delete('/:id', auth, admin, deleteOfferCtrl);
+router.get("/", listOffers);
+router.get("/:id", getOffer);
+router.post("/", createOfferCtrl);
+router.put("/:id", updateOfferCtrl);
+router.delete("/:id", deleteOfferCtrl);
 
 module.exports = router;

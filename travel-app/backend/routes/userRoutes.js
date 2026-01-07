@@ -1,8 +1,11 @@
 // backend/routes/userRoutes.js
-const router = require('express').Router();
-const auth = require('../middlewares/authMiddleware');
-const { getMyRequests } = require('../controllers/emailController');
+const express = require("express");
+const router = express.Router();
 
-router.get('/requests', auth, getMyRequests);
+const authMiddleware = require("../middlewares/authMiddleware");
+const { updateProfileCtrl, getProfileCtrl } = require("../controllers/userController");
+
+router.get("/me", authMiddleware, getProfileCtrl);
+router.put("/me", authMiddleware, updateProfileCtrl);
 
 module.exports = router;
